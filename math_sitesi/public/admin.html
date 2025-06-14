@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İçerik Yönetimi Paneli</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>İçerik Yönetimi Paneli</h1>
+    <div id="admin-buttons">
+        <button id="upload-notes">Ders Notları Yükle</button>
+        <button id="upload-questions">Soru Çözümleri Yükle</button>
+    </div>
+    <div id="upload-form" style="display: none;">
+        <h2>Dosya Yükle</h2>
+        <form id="upload-form-element">
+            <input type="file" id="file-input" multiple>
+            <button type="submit">Yükle</button>
+        </form>
+    </div>
+    <script src="admin.js"></script>
+</body>
+</html> 
