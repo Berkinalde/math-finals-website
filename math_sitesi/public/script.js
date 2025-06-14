@@ -147,37 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 imgElem.alt = `Soru ${index + 1}`;
                 imgElem.style.cursor = 'pointer';
                 imgElem.addEventListener('click', () => {
-                  const lightbox = document.createElement('div');
-                  lightbox.style.position = 'fixed';
-                  lightbox.style.top = '0';
-                  lightbox.style.left = '0';
-                  lightbox.style.width = '100%';
-                  lightbox.style.height = '100%';
-                  lightbox.style.backgroundColor = 'rgba(0,0,0,0.8)';
-                  lightbox.style.display = 'flex';
-                  lightbox.style.justifyContent = 'center';
-                  lightbox.style.alignItems = 'center';
-                  lightbox.style.zIndex = '1000';
-                  const closeButton = document.createElement('button');
-                  closeButton.textContent = 'X';
-                  closeButton.style.position = 'absolute';
-                  closeButton.style.top = '20px';
-                  closeButton.style.right = '20px';
-                  closeButton.style.background = 'none';
-                  closeButton.style.border = 'none';
-                  closeButton.style.color = '#fff';
-                  closeButton.style.fontSize = '24px';
-                  closeButton.style.cursor = 'pointer';
-                  closeButton.addEventListener('click', () => {
-                    document.body.removeChild(lightbox);
-                  });
-                  const fullImg = document.createElement('img');
-                  fullImg.src = imgElem.src;
-                  fullImg.style.maxWidth = '90%';
-                  fullImg.style.maxHeight = '90%';
-                  lightbox.appendChild(closeButton);
-                  lightbox.appendChild(fullImg);
-                  document.body.appendChild(lightbox);
+                  showLightbox(images, index);
                 });
                 imgWrapper.appendChild(title);
                 imgWrapper.appendChild(imgElem);
@@ -235,37 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   imgElem.alt = `Soru ${index + 1}`;
                   imgElem.style.cursor = 'pointer';
                   imgElem.addEventListener('click', () => {
-                    const lightbox = document.createElement('div');
-                    lightbox.style.position = 'fixed';
-                    lightbox.style.top = '0';
-                    lightbox.style.left = '0';
-                    lightbox.style.width = '100%';
-                    lightbox.style.height = '100%';
-                    lightbox.style.backgroundColor = 'rgba(0,0,0,0.8)';
-                    lightbox.style.display = 'flex';
-                    lightbox.style.justifyContent = 'center';
-                    lightbox.style.alignItems = 'center';
-                    lightbox.style.zIndex = '1000';
-                    const closeButton = document.createElement('button');
-                    closeButton.textContent = 'X';
-                    closeButton.style.position = 'absolute';
-                    closeButton.style.top = '20px';
-                    closeButton.style.right = '20px';
-                    closeButton.style.background = 'none';
-                    closeButton.style.border = 'none';
-                    closeButton.style.color = '#fff';
-                    closeButton.style.fontSize = '24px';
-                    closeButton.style.cursor = 'pointer';
-                    closeButton.addEventListener('click', () => {
-                      document.body.removeChild(lightbox);
-                    });
-                    const fullImg = document.createElement('img');
-                    fullImg.src = imgElem.src;
-                    fullImg.style.maxWidth = '90%';
-                    fullImg.style.maxHeight = '90%';
-                    lightbox.appendChild(closeButton);
-                    lightbox.appendChild(fullImg);
-                    document.body.appendChild(lightbox);
+                    showLightbox(images, index);
                   });
                   imgWrapper.appendChild(title);
                   imgWrapper.appendChild(imgElem);
@@ -285,4 +225,103 @@ document.addEventListener('DOMContentLoaded', () => {
       imagesContainer.appendChild(subButtons);
     });
   });
+
+  function showLightbox(images, startIndex) {
+    let currentIndex = startIndex;
+    const lightbox = document.createElement('div');
+    lightbox.style.position = 'fixed';
+    lightbox.style.top = '0';
+    lightbox.style.left = '0';
+    lightbox.style.width = '100%';
+    lightbox.style.height = '100%';
+    lightbox.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    lightbox.style.display = 'flex';
+    lightbox.style.justifyContent = 'center';
+    lightbox.style.alignItems = 'center';
+    lightbox.style.zIndex = '1000';
+
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'X';
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = '20px';
+    closeButton.style.right = '20px';
+    closeButton.style.background = 'none';
+    closeButton.style.border = 'none';
+    closeButton.style.color = '#fff';
+    closeButton.style.fontSize = '24px';
+    closeButton.style.cursor = 'pointer';
+
+    const fullImg = document.createElement('img');
+    fullImg.style.maxWidth = '90%';
+    fullImg.style.maxHeight = '90%';
+
+    function updateImage() {
+      fullImg.src = `uploads/${getCurrentCourse()}/${getCurrentTopic() ? getCurrentTopic() + '/' : ''}${images[currentIndex]}`;
+    }
+
+    function navigate(direction) {
+      currentIndex = (currentIndex + direction + images.length) % images.length;
+      updateImage();
+    }
+
+    // Keyboard Navigation
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') {
+        navigate(-1);
+      } else if (e.key === 'ArrowRight') {
+        navigate(1);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Swipe Navigation
+    let touchstartX = 0;
+    let touchendX = 0;
+    const swipeThreshold = 50; // Minimum distance for a swipe
+
+    lightbox.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX;
+    });
+
+    lightbox.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      if (touchendX < touchstartX - swipeThreshold) {
+        // Swiped left
+        navigate(1);
+      } else if (touchendX > touchstartX + swipeThreshold) {
+        // Swiped right
+        navigate(-1);
+      }
+    }
+
+    closeButton.addEventListener('click', () => {
+      document.body.removeChild(lightbox);
+      document.removeEventListener('keydown', handleKeyDown);
+    });
+
+    lightbox.appendChild(closeButton);
+    lightbox.appendChild(fullImg);
+    document.body.appendChild(lightbox);
+    updateImage();
+
+    // Helper to get current course and topic for image path
+    function getCurrentCourse() {
+      const activeBtn = document.querySelector('#course-buttons button[style*="border: 2px solid red"]');
+      return activeBtn ? activeBtn.getAttribute('data-course') : '';
+    }
+
+    function getCurrentTopic() {
+      const activeTopicBtn = document.querySelector('#images-container button[style*="background: rgb(245, 124, 0)"]');
+      if (activeTopicBtn && activeTopicBtn.textContent === 'TÜM SORULAR') {
+        return 'all-questions';
+      } else if (activeTopicBtn) {
+        return activeTopicBtn.textContent; // This needs to be the actual folder name, not just text
+      }
+      return '';
+    }
+  }
 }); 
