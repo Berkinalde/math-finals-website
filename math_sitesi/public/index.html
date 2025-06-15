@@ -3,16 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matematik Final </title>
+  
+  <!-- Google Fonts'tan Inter yazıtipini yükle -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Kendi CSS dosyan -->
   <link rel="stylesheet" href="style.css">
+  
+  <title>Matematik Final</title>
 </head>
 <body>
+  <header style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px; box-sizing: border-box;">
+    <button id="dark-mode-toggle" style="padding: 8px 15px; border-radius: 5px; cursor: pointer;">Dark Mode</button>
+  </header>
   <h1><a href="/" style="text-decoration: none; color: inherit;">Matematik Final</a></h1>
   <div id="course-buttons">
     <button data-course="analiz">Analiz</button>
     <button data-course="lineer-cebir">Lineer Cebir</button>
-    <button data-course="diff-equations">Diff equations</button>
-    <button data-course="math2">Math2</button>
+    <button data-course="diff-equations">Diff Equations</button>
+    <button data-course="kume-teorisi">Küme Teorisi</button>
+    <button data-course="sayisal-analiz">Sayısal Analiz</button>
   </div>
   <div id="images-container"></div>
   <script src="script.js"></script>

@@ -8,7 +8,7 @@ const multer = require('multer');
 app.use(express.static(path.join(__dirname, 'math_sitesi', 'public')));
 
 // API endpoint to serve image list for a course
-const dirs = ['analiz', 'lineer-cebir', 'diff-equations', 'math2'];
+const dirs = ['analiz', 'lineer-cebir', 'diff-equations', 'kume-teorisi'];
 app.get('/api/:ders', (req, res) => {
   const ders = req.params.ders;
   if (!dirs.includes(ders)) {

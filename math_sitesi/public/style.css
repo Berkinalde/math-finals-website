@@ -8,6 +8,16 @@
   --button-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
+.dark-mode {
+  --primary-color: #bb86fc;
+  --secondary-color: #03dac6;
+  --accent-color: #ffb74d;
+  --background-color: #121212;
+  --text-color: #e0e0e0;
+  --button-hover-color: #9a67ea;
+  --button-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--background-color);
@@ -19,12 +29,55 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1 {
   font-size: 2.5em;
   margin-bottom: 20px;
   color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+#course-buttons {
+  margin: 30px 0 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+#course-buttons button {
+  padding: 15px 30px;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--button-shadow);
+  min-width: 180px;
+}
+
+#course-buttons button:nth-child(1) {
+  background: #1976d2;
+}
+
+#course-buttons button:nth-child(2) {
+  background: #388e3c;
+}
+
+#course-buttons button:nth-child(3) {
+  background: #f57c00;
+}
+
+#course-buttons button:nth-child(4) {
+  background: #7b1fa2;
+}
+
+#course-buttons button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 12px rgba(0,0,0,0.2);
 }
 
 button {
@@ -60,6 +113,16 @@ img:hover {
   h1 {
     font-size: 2em;
   }
+  #course-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  #course-buttons button {
+    width: 80%;
+    font-size: 1.1em;
+    padding: 12px 25px;
+  }
   button {
     font-size: 0.9em;
     width: 90vw;
@@ -68,27 +131,4 @@ img:hover {
   img {
     max-width: 240px;
   }
-  #course-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-  #course-buttons button {
-    width: 90vw;
-  }
-}
-
-#course-buttons button:nth-child(1) {
-  background: #1976d2;
-}
-
-#course-buttons button:nth-child(2) {
-  background: #388e3c;
-}
-
-#course-buttons button:nth-child(3) {
-  background: #f57c00;
-}
-
-#course-buttons button:nth-child(4) {
-  background: #7b1fa2;
 } 
